@@ -14,7 +14,7 @@ LDFLAGS="-L$WORKSPACE/lib"
 LDEXEFLAGS=""
 EXTRALIBS="-ldl -lpthread -lm -lz"
 MACOS_M1=false
-CONFIGURE_OPTIONS=()
+CONFIGURE_OPTIONS=("--enable-librsvg")
 NONFREE_AND_GPL=false
 LATEST=false
 
@@ -34,7 +34,7 @@ elif [[ -f /proc/cpuinfo ]]; then
   MJOBS=$(grep -c processor /proc/cpuinfo)
 elif [[ "$OSTYPE" == "darwin"* ]]; then
   MJOBS=$(sysctl -n machdep.cpu.thread_count)
-  CONFIGURE_OPTIONS=("--enable-videotoolbox")
+  CONFIGURE_OPTIONS+=("--enable-videotoolbox")
   MACOS_LIBTOOL="$(which libtool)" # gnu libtool is installed in this script and need to avoid name conflict
 else
   MJOBS=4
