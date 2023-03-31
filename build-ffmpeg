@@ -14,7 +14,7 @@ LDFLAGS="-L$WORKSPACE/lib"
 LDEXEFLAGS=""
 EXTRALIBS="-ldl -lpthread -lm -lz"
 MACOS_M1=false
-CONFIGURE_OPTIONS=("--enable-librsvg")
+CONFIGURE_OPTIONS=()
 NONFREE_AND_GPL=false
 LATEST=false
 
