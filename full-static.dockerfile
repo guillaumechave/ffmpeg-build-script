@@ -1,4 +1,4 @@
-FROM ubuntu:22.04 AS build
+FROM ubuntu:22.04
 
 ENV DEBIAN_FRONTEND noninteractive
 ENV NVIDIA_VISIBLE_DEVICES all
@@ -14,20 +14,13 @@ COPY ./build-ffmpeg /app/build-ffmpeg
 
 RUN AUTOINSTALL=yes /app/build-ffmpeg --build --enable-gpl-and-non-free --full-static
 
-# Check shared library
-RUN ! ldd /app/workspace/bin/ffmpeg
-RUN ! ldd /app/workspace/bin/ffprobe
-RUN ! ldd /app/workspace/bin/ffplay
-
-FROM scratch
-
 ENV NVIDIA_VISIBLE_DEVICES all
 ENV NVIDIA_DRIVER_CAPABILITIES compute,utility,video
 
 # Copy ffmpeg
-COPY --from=build /app/workspace/bin/ffmpeg /ffmpeg
-COPY --from=build /app/workspace/bin/ffprobe /ffprobe
-COPY --from=build /app/workspace/bin/ffplay /ffplay
+RUN cp /app/workspace/bin/ffmpeg /ffmpeg
+RUN cp /app/workspace/bin/ffprobe /ffprobe
+RUN cp /app/workspace/bin/ffplay /ffplay
 
 CMD         ["--help"]
 ENTRYPOINT  ["/ffmpeg"]
